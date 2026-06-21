@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense, lazy } from "react"
 import Typewriter from "typewriter-effect"
 import { FeatureCards } from "@/components/FeatureCards"
 import FlickeringGrid from "@/components/FlickeringGrid"
+
+const ParkingMap = lazy(() => import("@/components/ParkingMap"))
 
 export default function Index() {
   const [mounted, setMounted] = useState(false)
@@ -69,6 +71,21 @@ export default function Index() {
                 <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
               </svg>
             </button>
+          </div>
+        </section>
+
+        <section className="min-h-screen py-20 px-4 md:px-6 snap-start bg-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-12 text-center">
+              <h2 className="text-2xl md:text-3xl text-white font-mono">Карта парковок</h2>
+              <div className="mt-2 w-20 h-px mx-auto bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <p className="mt-4 text-gray-400 text-sm max-w-xl mx-auto">
+                Свободные места — <span className="text-green-400">●</span> зелёные, занятые — <span className="text-red-400">●</span> красные, почти заняты — <span className="text-yellow-400">●</span> жёлтые
+              </p>
+            </div>
+            <Suspense fallback={<div className="w-full h-[480px] rounded-xl bg-gray-900/50 border border-gray-800/50 flex items-center justify-center text-gray-500 font-mono text-sm">Загрузка карты...</div>}>
+              <ParkingMap />
+            </Suspense>
           </div>
         </section>
 
